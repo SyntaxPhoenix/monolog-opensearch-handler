@@ -1,9 +1,9 @@
 {
-  "name": "geangontijo/monolog-opensearch-handler",
+  "name": "syntaxphoenix/monolog-opensearch-handler",
   "description": "OpenSearch handler for Monolog",
   "license": "MIT",
   "require": {
-    "monolog/monolog": "^3.3.1",
+    "monolog/monolog": "^2.0.0",
     "opensearch-project/opensearch-php": "^2.2.0"
   },
   "require-dev": {
@@ -11,7 +11,7 @@
   },
   "autoload": {
     "psr-4": {
-      "GeanGontijo\\MonologOpenSearchHandler\\": "src/"
+      "SyntaxPhoenix\\MonologOpenSearchHandler\\": "src/"
     }
   },
   "scripts": {

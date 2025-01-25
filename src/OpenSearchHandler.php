@@ -1,32 +1,45 @@
 <?php
 
-namespace GeanGontijo\MonologOpenSearchHandler;
+namespace SyntaxPhoenix\MonologOpenSearchHandler;
 
+use Monolog\Logger;
+use OpenSearch\Client;
+use OpenSearch\ClientBuilder;
 use Monolog\Formatter\ScalarFormatter;
 use Monolog\Handler\AbstractProcessingHandler;
-use Monolog\Level;
-use Monolog\LogRecord;
-use OpenSearch\Client;
 
 class OpenSearchHandler extends AbstractProcessingHandler
 {
     public function __construct(
-        protected readonly Client $client,
+        string $endpoint,
+        string $username = null,
+        string $password = null,
         protected readonly string $index,
-        int|string|Level $level = Level::Debug,
-        bool $bubble = true
+        int $level = Logger::DEBUG,
+        bool $bubble = true,
+        protected readonly ?Client $client = null
     ) {
         parent::__construct($level, $bubble);
+
+        if ($this->client == null) {
+            $builder = ClientBuilder::create()->setHosts([
+                $endpoint
+            ]);
+            if ($username != null && $password != null) {
+                $builder->setBasicAuthentication($username, $password);
+            }
+            $this->client = $builder->build();
+        }
     }
 
     /**
      * @inheritDoc
      */
-    protected function write(LogRecord $record): void
+    protected function write(array $record): void
     {
         $this->client->create([
             'index' => $this->index,
-            'body' => $record->formatted
+            'body' => $record['formatted']
         ]);
     }
 

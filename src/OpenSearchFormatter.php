@@ -1,6 +1,6 @@
 <?php
 
-namespace GeanGontijo\MonologOpenSearchHandler;
+namespace SyntaxPhoenix\MonologOpenSearchHandler;
 
 use DateTimeInterface;
 use Monolog\Formatter\NormalizerFormatter;

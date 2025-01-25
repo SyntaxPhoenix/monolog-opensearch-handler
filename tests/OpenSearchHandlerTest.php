@@ -1,13 +1,13 @@
 <?php
 
-use GeanGontijo\MonologOpenSearchHandler\OpenSearchFormatter;
-use GeanGontijo\MonologOpenSearchHandler\OpenSearchHandler;
-use Monolog\Formatter\JsonFormatter;
-use Monolog\Formatter\NormalizerFormatter;
+use Monolog\Logger;
 use Monolog\LogRecord;
 use Monolog\Test\TestCase;
 use OpenSearch\ClientBuilder;
+use Monolog\Formatter\NormalizerFormatter;
+use SyntaxPhoenix\MonologOpenSearchHandler\OpenSearchHandler;
 use OpenSearch\Common\Exceptions\NoNodesAvailableException;
+use SyntaxPhoenix\MonologOpenSearchHandler\OpenSearchFormatter;
 
 class OpenSearchHandlerTest extends TestCase
 {
@@ -17,7 +17,7 @@ class OpenSearchHandlerTest extends TestCase
             ->setHosts(['http://this.server.not.exists:9200'])
             ->build();
 
-        $handler = new OpenSearchHandler($client, 'my_index');
+        $handler = new OpenSearchHandler('http://this.server.not.exists:9200', null, null, 'my_index', Logger::DEBUG, true, $client);
 
         $this->expectException(NoNodesAvailableException::class);
         $handler->handle($this->getRecord());
