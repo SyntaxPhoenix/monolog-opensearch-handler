@@ -2,11 +2,12 @@
 
 namespace SyntaxPhoenix\MonologOpenSearchHandler;
 
-use Monolog\Logger;
+use Monolog\Level;
 use OpenSearch\Client;
 use OpenSearch\ClientBuilder;
 use Monolog\Formatter\ScalarFormatter;
 use Monolog\Handler\AbstractProcessingHandler;
+use Monolog\LogRecord;
 
 class OpenSearchHandler extends AbstractProcessingHandler
 {
@@ -15,7 +16,7 @@ class OpenSearchHandler extends AbstractProcessingHandler
         string $username = null,
         string $password = null,
         protected readonly string $index,
-        int $level = Logger::DEBUG,
+        int|string|Level $level = Level::Debug,
         bool $bubble = true,
         protected readonly ?Client $client = null
     ) {
@@ -35,11 +36,11 @@ class OpenSearchHandler extends AbstractProcessingHandler
     /**
      * @inheritDoc
      */
-    protected function write(array $record): void
+    protected function write(LogRecord $record): void
     {
         $this->client->create([
             'index' => $this->index,
-            'body' => $record['formatted']
+            'body' => $record->formatted
         ]);
     }
 

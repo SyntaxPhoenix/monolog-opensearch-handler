@@ -106,7 +106,10 @@ composer require syntaxphoenix/monolog-opensearch-handler
 
 ## Monolog versions
 
-Currently only monolog version 2 is supported.
+|                                   | **Monolog v1** | **Monolog v2** | **Monolog v3** |
+|-----------------------------------|----------------|----------------|----------------|
+| **monolog-opensearch-handler v1** |                |         ✓      |                |
+| **monolog-opensearch-handler v2** |                |                |         ✓      |
 
 <!-- ROADMAP -->
 ## Roadmap

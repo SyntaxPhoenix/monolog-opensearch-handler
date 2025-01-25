@@ -1,12 +1,12 @@
 <?php
 
-use Monolog\Logger;
+use Monolog\Level;
 use Monolog\LogRecord;
 use Monolog\Test\TestCase;
 use OpenSearch\ClientBuilder;
 use Monolog\Formatter\NormalizerFormatter;
-use SyntaxPhoenix\MonologOpenSearchHandler\OpenSearchHandler;
 use OpenSearch\Common\Exceptions\NoNodesAvailableException;
+use SyntaxPhoenix\MonologOpenSearchHandler\OpenSearchHandler;
 use SyntaxPhoenix\MonologOpenSearchHandler\OpenSearchFormatter;
 
 class OpenSearchHandlerTest extends TestCase
@@ -17,7 +17,7 @@ class OpenSearchHandlerTest extends TestCase
             ->setHosts(['http://this.server.not.exists:9200'])
             ->build();
 
-        $handler = new OpenSearchHandler('http://this.server.not.exists:9200', null, null, 'my_index', Logger::DEBUG, true, $client);
+        $handler = new OpenSearchHandler('http://this.server.not.exists:9200', null, null, 'my_index', Level::Debug, true, $client);
 
         $this->expectException(NoNodesAvailableException::class);
         $handler->handle($this->getRecord());

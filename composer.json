@@ -3,7 +3,7 @@
   "description": "OpenSearch handler for Monolog",
   "license": "MIT",
   "require": {
-    "monolog/monolog": "^2.0.0",
+    "monolog/monolog": "^3.0.0",
     "opensearch-project/opensearch-php": "^2.2.0"
   },
   "require-dev": {
