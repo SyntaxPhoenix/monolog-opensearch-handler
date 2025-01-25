@@ -17,7 +17,7 @@ class OpenSearchHandler extends AbstractProcessingHandler
         protected readonly string $index,
         int $level = Logger::DEBUG,
         bool $bubble = true,
-        protected readonly ?Client $client = null
+        protected ?Client $client = null
     ) {
         parent::__construct($level, $bubble);
 
