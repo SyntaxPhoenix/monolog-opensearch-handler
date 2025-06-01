@@ -4,7 +4,7 @@ namespace SyntaxPhoenix\MonologOpenSearchHandler;
 
 use Monolog\Logger;
 use OpenSearch\Client;
-use OpenSearch\ClientBuilder;
+use OpenSearch\SymfonyClientFactory;
 use Monolog\Formatter\ScalarFormatter;
 use Monolog\Handler\AbstractProcessingHandler;
 
@@ -22,13 +22,15 @@ class OpenSearchHandler extends AbstractProcessingHandler
         parent::__construct($level, $bubble);
 
         if ($this->client == null) {
-            $builder = ClientBuilder::create()->setHosts([
-                $endpoint
-            ]);
+            $settings = [
+                'base_uri' => $endpoint
+            ];
+
             if ($username != null && $password != null) {
-                $builder->setBasicAuthentication($username, $password);
+                $settings['auth_basic'] = [$username, $password];
             }
-            $this->client = $builder->build();
+
+            $this->client = (new SymfonyClientFactory())->create($settings);
         }
     }
 
