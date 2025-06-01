@@ -5,7 +5,7 @@
   "require": {
     "monolog/monolog": "^2.0.0",
     "opensearch-project/opensearch-php": "^2.2.0",
-    "symfony/http-client": "^7.3",
+    "symfony/http-client": "^6.0|^7.0",
     "nyholm/psr7": "^1.8"
   },
   "require-dev": {
@@ -18,5 +18,10 @@
   },
   "scripts": {
     "test": "phpunit tests --testdox --colors"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": false
+    }
   }
 }
