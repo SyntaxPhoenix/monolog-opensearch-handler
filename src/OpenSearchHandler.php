@@ -12,8 +12,8 @@ class OpenSearchHandler extends AbstractProcessingHandler
 {
     public function __construct(
         string $endpoint,
-        string $username = null,
-        string $password = null,
+        ?string $username = null,
+        ?string $password = null,
         protected readonly string $index,
         int $level = Logger::DEBUG,
         bool $bubble = true,
