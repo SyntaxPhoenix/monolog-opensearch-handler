@@ -11,27 +11,15 @@ use Monolog\Handler\AbstractProcessingHandler;
 class OpenSearchHandler extends AbstractProcessingHandler
 {
     public function __construct(
-        string $endpoint,
-        ?string $username = null,
-        ?string $password = null,
+        private string $endpoint,
         protected readonly string $index,
-        int $level = Logger::DEBUG,
-        bool $bubble = true,
+        private ?string $username = null,
+        private ?string $password = null,
+        private int $level = Logger::DEBUG,
+        private bool $bubble = true,
         protected ?Client $client = null
     ) {
         parent::__construct($level, $bubble);
-
-        if ($this->client == null) {
-            $settings = [
-                'base_uri' => $endpoint
-            ];
-
-            if ($username != null && $password != null) {
-                $settings['auth_basic'] = [$username, $password];
-            }
-
-            $this->client = (new SymfonyClientFactory())->create($settings);
-        }
     }
 
     /**
@@ -39,6 +27,19 @@ class OpenSearchHandler extends AbstractProcessingHandler
      */
     protected function write(array $record): void
     {
+        if ($this->client == null) {
+            $settings = [
+                'base_uri' => $this->endpoint,
+                'verify_peer' => false,
+            ];
+
+            if ($this->username != null && $this->password != null) {
+                $settings['auth_basic'] = [$this->username, $this->password];
+            }
+
+            $this->client = (new SymfonyClientFactory())->create($settings);
+        }
+
         $this->client->create([
             'index' => $this->index,
             'body' => $record['formatted']
